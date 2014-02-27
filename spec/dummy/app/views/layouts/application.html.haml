@@ -1,0 +1,39 @@
+!!!
+%html
+  %head
+    %title Тестовое приложение
+    = stylesheet_link_tag    "application"
+    = javascript_include_tag "application"
+    = csrf_meta_tags
+  %body
+    .navbar.navbar-fixed-top
+      .navbar-inner
+        .container
+          %a.brand(href="/")=SecretSetting.app_name
+          -if current_shop
+            %ul.nav.pull-right
+              %li.dropdown
+                =link_to '#', class: 'dropdown-toggle', data: { toggle: :dropdown } do
+                  =current_shop['name']
+                  %b.caret
+                %ul.dropdown-menu
+                  %li
+                    =link_to shop_url, target: :_blank do
+                      %i.icon-home
+                      Перейти в магазин
+                  %li
+                    =link_to "#{shop_url}/admin", target: :_blank do
+                      %i.icon-cog
+                      Перейти в админ раздел
+                  %li.divider
+                  %li
+                    =link_to sign_out_path do
+                      %i.icon-off
+                      Выход
+
+    #main.container
+      = yield
+    #footer.footer
+      %p(style="padding-right:20px;")
+        ==Copyright©#{Date.today.year}
+        =link_to SecretSetting.app_name, '/'
